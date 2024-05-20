@@ -1,18 +1,34 @@
-import { CircleStackIcon } from '@heroicons/react/24/solid';
-import React from 'react';
+import Profile, { ProfileProps } from "@/components/profile";
+import { CircleStackIcon } from "@heroicons/react/24/solid";
+import React from "react";
 
 interface CardProps {
-  name: string;
+  avatar?: string;
   dateStart: Date;
   dateEnd: Date;
-  type: 'Vacation' | 'Off' | 'Etc.';
+  userType: string;
 }
 
-const Card = () => {
+const Card = ({
+  avatar,
+  username,
+  userType,
+  type,
+  dateStart,
+  dateEnd,
+}: CardProps & ProfileProps) => {
   return (
-    <div>
-      <div>
-        <CircleStackIcon className="size-8" />
+    <div className="px-5 flex flex-col gap-4 bg-neutral-800">
+      <Profile username={username} type={userType} avatar={avatar} border />
+      <div className="flex flex-col">
+        <span className="text-lg">
+          {dateStart.toLocaleDateString()}-{dateEnd.toLocaleDateString()}
+        </span>
+        <span className="text-sm text-neutral-500">{type}</span>
+      </div>
+      <div className="flex justify-end text-lg gap-2">
+        <button className="p-3 text-neutral-500">반려</button>
+        <button className="p-3">승인</button>
       </div>
     </div>
   );
@@ -30,13 +46,23 @@ export default function Incoming() {
         </div>
       </div>
       <div className="relative h-[81vh]">
-        <div className="flex flex-col h-full overflow-y-scroll">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+        <div className="flex flex-col h-full overflow-y-scroll gap-5 p-2">
+          <Card
+            username="Timothy Elliot"
+            userType="진료과장"
+            type="Vacation"
+            dateStart={new Date(2024, 5, 10)}
+            dateEnd={new Date(2024, 5, 13)}
+            avatar="1"
+          />
+          <Card
+            username="Timothy Elliot"
+            userType="진료과장"
+            type="Vacation"
+            dateStart={new Date(2024, 5, 10)}
+            dateEnd={new Date(2024, 5, 13)}
+            avatar="1"
+          />
         </div>
       </div>
     </>

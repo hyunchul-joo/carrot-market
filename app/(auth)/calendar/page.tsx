@@ -1,48 +1,42 @@
-'use client';
+"use client";
 
-import {
-  BriefcaseIcon,
-  DocumentCheckIcon,
-  DocumentPlusIcon,
-  ListBulletIcon,
-  UserCircleIcon,
-  UserIcon,
-} from '@heroicons/react/24/outline';
-import {} from '@heroicons/react/24/solid';
-import moment from 'moment';
-import Link from 'next/link';
-import React, { useState } from 'react';
+import Profile, { ProfileProps } from "@/components/profile";
+import { UserCircleIcon } from "@heroicons/react/24/outline";
+import {} from "@heroicons/react/24/solid";
+import moment from "moment";
+import Link from "next/link";
+import React, { useState } from "react";
 
-const SMOKE = '#AABCD0';
-const INDIGO = '#8D7AEE';
-const TURQUOISE = '#0CC9C3';
-const BLACK = '#383F51';
+const SMOKE = "#AABCD0";
+const INDIGO = "#8D7AEE";
+const TURQUOISE = "#0CC9C3";
+const BLACK = "#383F51";
 
-const vacationList = [
-  { user: 'You', type: 'Vacaton' },
-  { user: 'Shawn Harper', type: 'Vacaton' },
-  { user: 'Christina Carter', type: 'Work from Home' },
-  { user: 'Vernon Estrada', type: 'Sick Leave' },
-  { user: 'You', type: 'Vacaton' },
-  { user: 'Shawn Harper', type: 'Vacaton' },
-  { user: 'Christina Carter', type: 'Work from Home' },
-  { user: 'Vernon Estrada', type: 'Sick Leave' },
-  { user: 'You', type: 'Vacaton' },
-  { user: 'Shawn Harper', type: 'Vacaton' },
-  { user: 'Christina Carter', type: 'Work from Home' },
-  { user: 'Vernon Estrada', type: 'Sick Leave' },
-  { user: 'You', type: 'Vacaton' },
-  { user: 'Shawn Harper', type: 'Vacaton' },
-  { user: 'Christina Carter', type: 'Work from Home' },
-  { user: 'Vernon Estrada', type: 'Sick Leave' },
-  { user: 'You', type: 'Vacaton' },
-  { user: 'Shawn Harper', type: 'Vacaton' },
-  { user: 'Christina Carter', type: 'Work from Home' },
-  { user: 'Vernon Estrada', type: 'Sick Leave' },
-  { user: 'You', type: 'Vacaton' },
-  { user: 'Shawn Harper', type: 'Vacaton' },
-  { user: 'Christina Carter', type: 'Work from Home' },
-  { user: 'Vernon Estrada', type: 'Sick Leave' },
+const vacationList: ProfileProps[] = [
+  { username: "You", type: "Vacation" },
+  { username: "Shawn Harper", type: "Vacation" },
+  { username: "Christina Carter", type: "Off" },
+  { username: "Vernon Estrada", type: "Etc." },
+  { username: "You", type: "Vacation" },
+  { username: "Shawn Harper", type: "Vacation" },
+  { username: "Christina Carter", type: "Off" },
+  { username: "Vernon Estrada", type: "Etc." },
+  { username: "You", type: "Vacation" },
+  { username: "Shawn Harper", type: "Vacation" },
+  { username: "Christina Carter", type: "Off" },
+  { username: "Vernon Estrada", type: "Etc." },
+  { username: "You", type: "Vacation" },
+  { username: "Shawn Harper", type: "Vacation" },
+  { username: "Christina Carter", type: "Off" },
+  { username: "Vernon Estrada", type: "Etc." },
+  { username: "You", type: "Vacation" },
+  { username: "Shawn Harper", type: "Vacation" },
+  { username: "Christina Carter", type: "Off" },
+  { username: "Vernon Estrada", type: "Etc." },
+  { username: "You", type: "Vacation" },
+  { username: "Shawn Harper", type: "Vacation" },
+  { username: "Christina Carter", type: "Off" },
+  { username: "Vernon Estrada", type: "Etc." },
 ];
 
 function get3Months(year: number, month: number) {
@@ -73,7 +67,7 @@ interface CalendarProps {
 }
 
 const CalendarComponent = ({ year, month }: CalendarProps) => {
-  const dayHeader = ['일', '월', '화', '수', '목', '금', '토'];
+  const dayHeader = ["일", "월", "화", "수", "목", "금", "토"];
   let [prevDates, currDates, nextDates] = get3Months(year, month);
   const startDay = new Date(year, month, 1).getDay();
   prevDates = prevDates.slice(-startDay);
@@ -91,7 +85,7 @@ const CalendarComponent = ({ year, month }: CalendarProps) => {
       {dayHeader.map((ele, index) => (
         <div
           className={`${
-            index === 0 ? 'text-red-500' : index === 6 ? 'text-blue-500' : ''
+            index === 0 ? "text-red-500" : index === 6 ? "text-blue-500" : ""
           }`}
           key={index}
         >
@@ -102,10 +96,10 @@ const CalendarComponent = ({ year, month }: CalendarProps) => {
         <div
           className={`opacity-50 ${
             ele.getDay() === 0
-              ? 'text-red-500'
+              ? "text-red-500"
               : ele.getDay() === 6
-              ? 'text-blue-500'
-              : ''
+              ? "text-blue-500"
+              : ""
           }`}
           key={`prev${index}`}
         >
@@ -116,10 +110,10 @@ const CalendarComponent = ({ year, month }: CalendarProps) => {
         <div
           className={`${
             ele.getDay() === 0
-              ? 'text-red-500'
+              ? "text-red-500"
               : ele.getDay() === 6
-              ? 'text-blue-500'
-              : ''
+              ? "text-blue-500"
+              : ""
           }`}
           key={`curr${index}`}
         >
@@ -130,10 +124,10 @@ const CalendarComponent = ({ year, month }: CalendarProps) => {
         <div
           className={`opacity-50 ${
             ele.getDay() === 0
-              ? 'text-red-500'
+              ? "text-red-500"
               : ele.getDay() === 6
-              ? 'text-blue-500'
-              : ''
+              ? "text-blue-500"
+              : ""
           }`}
           key={`next${index}`}
         >
@@ -148,10 +142,10 @@ export default function MyCalendar() {
   const today = new Date();
   const [year, setYear] = useState(today.getFullYear());
   const [month, setMonth] = useState(today.getMonth());
-  const yearMonth = moment(today).format('YYYY-MM');
+  const yearMonth = moment(today).format("YYYY-MM");
 
   const onMonthChange = (e: React.FormEvent<HTMLInputElement>) => {
-    const [year, month] = e.currentTarget.value.split('-');
+    const [year, month] = e.currentTarget.value.split("-");
     setYear(Number(year));
     setMonth(Number(month));
   };
@@ -178,21 +172,13 @@ export default function MyCalendar() {
         <CalendarComponent year={year} month={month} />
       </div>
       <div className="relative h-[48%]">
-        <div className="flex flex-col h-full overflow-y-scroll">
+        <div className="flex flex-col h-full overflow-y-scroll px-5">
           {vacationList.map((vacation, index) => (
-            <div
+            <Profile
               key={index}
-              className="flex justify-between items-center p-3 px-5"
-            >
-              <div className="flex flex-col">
-                <span>{vacation.user}</span>
-                <span className="text-xs">{vacation.type}</span>
-              </div>
-              <div className="flex gap-x-2">
-                <div className="size-5 bg-neutral-300 rounded-md" />
-                <div className="size-5 bg-neutral-500 rounded-md" />
-              </div>
-            </div>
+              username={vacation.username}
+              type={vacation.type}
+            />
           ))}
         </div>
       </div>
