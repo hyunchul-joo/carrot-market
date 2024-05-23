@@ -57,6 +57,7 @@ model HanilUser {
 model Vacation {
   id        Int      @id @default(autoincrement())
   date      DateTime
+  type      String
   createdAt DateTime @default(now())
   approved  Boolean  @default(false)
 

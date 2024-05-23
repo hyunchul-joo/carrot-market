@@ -16,7 +16,7 @@ export default function Footer() {
     useRecoilState(vacationAddClicked);
   return (
     <>
-      <div className="fixed h-[8vh] bottom-0 left-0 right-0 flex justify-evenly items-center border-t py-3 *:size-10 bg-black">
+      <div className="fixed h-[8vh] bottom-0 left-0 right-0 flex justify-evenly items-center border-t py-3 *:size-10 bg-black max-w-screen-sm mx-auto">
         <BriefcaseIcon />
         <DocumentCheckIcon />
         <DocumentPlusIcon onClick={() => setVacationClicked(true)} />

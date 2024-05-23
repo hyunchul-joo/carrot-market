@@ -8,15 +8,13 @@ export async function getVacations() {
     select: {
       id: true,
       date: true,
+      type: true,
       createdAt: true,
       HanilUser: {
         select: {
           koreanName: true,
         },
       },
-    },
-    orderBy: {
-      createdAt: "asc",
     },
   });
   return vacations;
