@@ -23,7 +23,8 @@ export default function RootLayout({
       <body
         className={`${inter.className} bg-neutral-900 text-white max-w-screen-sm mx-auto`}
       >
-        <RecoilRootWrapper>{children}</RecoilRootWrapper>
+        {/* <RecoilRootWrapper>{children}</RecoilRootWrapper> */}
+        {children}
       </body>
     </html>
   );

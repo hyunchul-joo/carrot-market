@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import ListProduct from "./list-product";
-import { InitialProducts } from "@/app/products/page";
-import { getMoreProducts } from "@/app/products/actions";
+import { InitialProducts } from "@/app/(tabs)/home/page";
+import { getMoreProducts } from "@/app/(tabs)/home/actions";
 
 interface ProductListProps {
   initialProducts: InitialProducts;
@@ -52,14 +52,14 @@ export default function ProductList({ initialProducts }: ProductListProps) {
       {products.map((product) => (
         <ListProduct key={product.id} {...product} />
       ))}
-      {!isLastPage ? (
+      {/* {!isLastPage ? (
         <span
           ref={trigger}
           className="text-sm font-semibold bg-orange-500 w-fit mx-auto px-3 py-2 rounded-md hover:opacity-90 active:scale-95"
         >
           {isLoading ? "로딩 중" : "Load more"}
         </span>
-      ) : null}
+      ) : null} */}
     </div>
   );
 }
