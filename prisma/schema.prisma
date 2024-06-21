@@ -8,20 +8,22 @@ datasource db {
 }
 
 model User {
-  id        Int        @id @default(autoincrement())
-  username  String     @unique
-  email     String?    @unique
-  password  String?
-  phone     String?    @unique
-  github_id String?    @unique
-  avatar    String?
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  SMSToken  SMSToken[]
-  Product   Product[]
-  posts     Post[]
-  Comment   Comment[]
-  Like      Like[]
+  id         Int        @id @default(autoincrement())
+  username   String     @unique
+  email      String?    @unique
+  password   String?
+  phone      String?    @unique
+  github_id  String?    @unique
+  avatar     String?
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  tokens     SMSToken[]
+  products   Product[]
+  posts      Post[]
+  comments   Comment[]
+  likes      Like[]
+  chat_rooms ChatRoom[]
+  Message    Message[]
 }
 
 model SMSToken {
@@ -42,10 +44,10 @@ model Post {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId  Int
-  Comment Comment[]
-  Like    Like[]
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   Int
+  comments Comment[]
+  likes    Like[]
 }
 
 model Comment {
@@ -84,6 +86,28 @@ model Product {
   updated_at DateTime @updatedAt
   userId     Int
   user       User     @relation(fields: [userId], references: [id])
+}
+
+model ChatRoom {
+  id    String @id @default(cuid())
+  users User[]
+
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  messages   Message[]
+}
+
+model Message {
+  id      Int    @id @default(autoincrement())
+  payload String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  room       ChatRoom @relation(fields: [chatRoomId], references: [id])
+  user       User     @relation(fields: [userId], references: [id])
+  chatRoomId String
+  userId     Int
 }
 
 model HanilUser {

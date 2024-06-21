@@ -1,11 +1,11 @@
-import db from '@/lib/db';
-import getSession from '@/lib/session';
-import { formatToWon } from '@/lib/utils';
-import { UserIcon } from '@heroicons/react/24/solid';
-import { revalidatePath, revalidateTag, unstable_cache } from 'next/cache';
-import Image from 'next/image';
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import db from "@/lib/db";
+import getSession from "@/lib/session";
+import { formatToWon } from "@/lib/utils";
+import { UserIcon } from "@heroicons/react/24/solid";
+import { revalidatePath, revalidateTag, unstable_cache } from "next/cache";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound, redirect } from "next/navigation";
 
 async function getIsOwner(userId: number) {
   // const session = await getSession();
@@ -32,8 +32,8 @@ async function getProduct(id: number) {
   return product;
 }
 
-const getCachedProduct = unstable_cache(getProduct, ['product-detail'], {
-  tags: ['product-detail'],
+const getCachedProduct = unstable_cache(getProduct, ["product-detail"], {
+  tags: ["product-detail"],
 });
 
 async function getProductTitle(id: number) {
@@ -50,9 +50,9 @@ async function getProductTitle(id: number) {
 
 const getCachedProductTitle = unstable_cache(
   getProductTitle,
-  ['product-title'],
+  ["product-title"],
   {
-    tags: ['product-title'],
+    tags: ["product-title"],
   }
 );
 
@@ -78,8 +78,30 @@ export default async function ProductDetail({
   }
   const isOwner = await getIsOwner(product.userId);
   const revalidate = async () => {
-    'use server';
-    revalidateTag('xxxx');
+    "use server";
+    revalidateTag("xxxx");
+  };
+  const createChatRoom = async () => {
+    "use server";
+    const session = await getSession();
+    const room = await db.chatRoom.create({
+      data: {
+        users: {
+          connect: [
+            {
+              id: product.userId,
+            },
+            {
+              id: session.id,
+            },
+          ],
+        },
+      },
+      select: {
+        id: true,
+      },
+    });
+    redirect(`/chats/${room.id}`);
   };
   return (
     <div className="pb-40">
@@ -123,12 +145,11 @@ export default async function ProductDetail({
             </button>
           </form>
         ) : null}
-        <Link
-          className="bg-orange-500 px-5 py-2.5 rounded-md text-white font-semibold"
-          href={``}
-        >
-          채팅하기
-        </Link>
+        <form action={createChatRoom}>
+          <button className="bg-orange-500 px-5 py-2.5 rounded-md text-white font-semibold">
+            채팅하기
+          </button>
+        </form>
       </div>
     </div>
   );
@@ -140,5 +161,5 @@ export async function generateStaticParams() {
       id: true,
     },
   });
-  return products.map((product) => ({ id: product.id + '' }));
+  return products.map((product) => ({ id: product.id + "" }));
 }
